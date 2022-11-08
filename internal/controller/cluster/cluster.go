@@ -156,7 +156,7 @@ func (c *connector) Connect(ctx context.Context, mg resource.Managed) (managed.E
 	if err != nil {
 		return nil, errors.Wrap(err, "Failed to get creator")
 	}
-	
+
 	return &external{rosaClient: rosaClient, awsClient: &awsClient, creator: creator, htpasswdIDP: htpasswdIDP}, nil
 }
 
