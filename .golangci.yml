@@ -112,6 +112,7 @@ linters-settings:
 linters:
   disable:
     - bodyclose
+    - noctx
   enable:
     - megacheck
     - govet
