@@ -120,7 +120,7 @@ func CreateRoles(r *rosa.Runtime, awsClient aws.Client, prefix string, cluster *
 		return err
 	}
 	for credrequest, operator := range credRequests {
-		roleName, _ := getRoleNameAndARN(cluster, operator)
+		roleName := getRoleNameAndARN(cluster, operator)
 		if roleName == "" {
 			return fmt.Errorf("failed to find operator IAM role")
 		}
@@ -168,14 +168,14 @@ func CreateRoles(r *rosa.Runtime, awsClient aws.Client, prefix string, cluster *
 }
 
 // getRoleNameAndARN returns the role name and ARN for the given operator
-func getRoleNameAndARN(cluster *cmv1.Cluster, operator *cmv1.STSOperator) (string, string) {
+func getRoleNameAndARN(cluster *cmv1.Cluster, operator *cmv1.STSOperator) string {
 	for _, role := range cluster.AWS().STS().OperatorIAMRoles() {
 		if role.Namespace() == operator.Namespace() && role.Name() == operator.Name() {
 			name, _ := aws.GetResourceIdFromARN(role.RoleARN())
-			return name, role.RoleARN()
+			return name
 		}
 	}
-	return "", ""
+	return ""
 }
 
 // getPathFromInstallerRole returns the path of the installer role
@@ -259,7 +259,7 @@ func DeleteRoles(r *rosa.Runtime, awsClient aws.Client, cluster *cmv1.Cluster) e
 		return err
 	}
 	for _, operator := range credRequests {
-		roleName, _ := getRoleNameAndARN(cluster, operator)
+		roleName := getRoleNameAndARN(cluster, operator)
 		if roleName == "" {
 			return fmt.Errorf("failed to find operator IAM role")
 		}
@@ -272,7 +272,7 @@ func DeleteRoles(r *rosa.Runtime, awsClient aws.Client, cluster *cmv1.Cluster) e
 }
 
 // CreateAdminUser creates the admin user for the cluster
-func CreateAdminUser(username, password string,r *rosa.Runtime, awsClient aws.Client, cluster *cmv1.Cluster) error {
+func CreateAdminUser(username, password string, r *rosa.Runtime, awsClient aws.Client, cluster *cmv1.Cluster) error {
 	_, existingUserList := idp.FindExistingHTPasswdIDP(cluster, r)
 	hasAdmin := false
 	existingUserList.Each(func(user *cmv1.HTPasswdUser) bool {
