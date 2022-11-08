@@ -110,6 +110,7 @@ linters-settings:
         sizeThreshold: 32
 
 linters:
+  disable-all: true
   enable:
     - megacheck
     - govet
