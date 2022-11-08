@@ -253,7 +253,10 @@ func (c *external) Update(ctx context.Context, mg resource.Managed) (managed.Ext
 	if err != nil {
 		return managed.ExternalUpdate{}, err
 	}
-	c.rosaClient.OCMClient.UpdateCluster(cr.Name, c.creator, util.ClusterConfig(cr, credRequests))
+	err = c.rosaClient.OCMClient.UpdateCluster(cr.Name, c.creator, util.ClusterConfig(cr, credRequests))
+	if err != nil {
+		return managed.ExternalUpdate{}, err
+	}
 	return managed.ExternalUpdate{
 		ConnectionDetails: managed.ConnectionDetails{},
 	}, nil
@@ -270,8 +273,10 @@ func (c *external) Delete(ctx context.Context, mg resource.Managed) error {
 		return err
 	}
 	cr.Status.SetConditions(xpv1.Deleting())
-	c.rosaClient.OCMClient.DeleteCluster(cr.Name, c.creator)
-
+	_, err = c.rosaClient.OCMClient.DeleteCluster(cr.Name, c.creator)
+	if err != nil {
+		return err
+	}
 	err = util.DeleteProvider(c.rosaClient, *c.awsClient, cluster)
 	if err != nil {
 		return err

@@ -37,7 +37,7 @@ type ClusterParameters struct {
 	Flavour                   string      `json:"flavour,omitempty"`
 	DisableWorkloadMonitoring *bool       `json:"disableWorkloadMonitoring,omitempty"`
 
-	//Encryption
+	// Encryption
 	FIPS           bool   `json:"fips,omitempty"`
 	EtcdEncryption bool   `json:"etcdEncryption,omitempty"`
 	KMSKeyArn      string `json:"kmsKeyArn,omitempty"`
