@@ -1,17 +1,38 @@
-module github.com/crossplane/provider-template
+module github.com/crossplane/provider-rosa
 
 go 1.19
 
 require (
 	github.com/crossplane/crossplane-runtime v0.18.0
 	github.com/crossplane/crossplane-tools v0.0.0-20220901191540-806c0b01097b
-	github.com/google/go-cmp v0.5.9
+	github.com/openshift-online/ocm-sdk-go v0.1.288
 	github.com/pkg/errors v0.9.1
 	gopkg.in/alecthomas/kingpin.v2 v2.2.6
 	k8s.io/apimachinery v0.25.3
 	k8s.io/client-go v0.25.3
 	sigs.k8s.io/controller-runtime v0.12.0
 	sigs.k8s.io/controller-tools v0.10.0
+)
+
+require (
+	github.com/AlecAivazis/survey/v2 v2.2.15 // indirect
+	github.com/aws/aws-sdk-go v1.39.3 // indirect
+	github.com/aymerick/douceur v0.2.0 // indirect
+	github.com/briandowns/spinner v1.11.1 // indirect
+	github.com/cenkalti/backoff/v4 v4.1.3 // indirect
+	github.com/creack/pty v1.1.11 // indirect
+	github.com/dchest/validator v0.0.0-20191217151620-8e45250f2371 // indirect
+	github.com/golang-jwt/jwt/v4 v4.4.1 // indirect
+	github.com/golang/glog v1.0.0 // indirect
+	github.com/google/go-cmp v0.5.9 // indirect
+	github.com/gorilla/css v1.0.0 // indirect
+	github.com/jmespath/go-jmespath v0.4.0 // indirect
+	github.com/kballard/go-shellquote v0.0.0-20180428030007-95032a82bc51 // indirect
+	github.com/mgutz/ansi v0.0.0-20200706080929-d51e80ef957d // indirect
+	github.com/microcosm-cc/bluemonday v1.0.18 // indirect
+	github.com/sirupsen/logrus v1.8.1 // indirect
+	github.com/zgalor/weberr v0.6.0 // indirect
+	gitlab.com/c0b/go-ordered-json v0.0.0-20171130231205-49bbdab258c2 // indirect
 )
 
 require (
@@ -42,7 +63,7 @@ require (
 	github.com/golang/snappy v0.0.4 // indirect
 	github.com/google/gnostic v0.5.7-v3refs // indirect
 	github.com/google/gofuzz v1.1.0 // indirect
-	github.com/google/uuid v1.1.2 // indirect
+	github.com/google/uuid v1.3.0 // indirect
 	github.com/hashicorp/errwrap v1.1.0 // indirect
 	github.com/hashicorp/go-cleanhttp v0.5.2 // indirect
 	github.com/hashicorp/go-hclog v0.16.2 // indirect
@@ -56,7 +77,7 @@ require (
 	github.com/hashicorp/go-secure-stdlib/strutil v0.1.1 // indirect
 	github.com/hashicorp/go-sockaddr v1.0.2 // indirect
 	github.com/hashicorp/go-uuid v1.0.2 // indirect
-	github.com/hashicorp/go-version v1.2.0 // indirect
+	github.com/hashicorp/go-version v1.3.0 // indirect
 	github.com/hashicorp/golang-lru v0.5.4 // indirect
 	github.com/hashicorp/hcl v1.0.0 // indirect
 	github.com/hashicorp/vault/api v1.3.1 // indirect
@@ -68,7 +89,7 @@ require (
 	github.com/json-iterator/go v1.1.12 // indirect
 	github.com/mailru/easyjson v0.7.6 // indirect
 	github.com/mattn/go-colorable v0.1.8 // indirect
-	github.com/mattn/go-isatty v0.0.12 // indirect
+	github.com/mattn/go-isatty v0.0.14 // indirect
 	github.com/matttproud/golang_protobuf_extensions v1.0.2-0.20181231171920-c182affec369 // indirect
 	github.com/mitchellh/copystructure v1.0.0 // indirect
 	github.com/mitchellh/go-homedir v1.1.0 // indirect
@@ -79,6 +100,7 @@ require (
 	github.com/modern-go/reflect2 v1.0.2 // indirect
 	github.com/munnerz/goautoneg v0.0.0-20191010083416-a7dc8b61c822 // indirect
 	github.com/oklog/run v1.0.0 // indirect
+	github.com/openshift/rosa v1.2.8
 	github.com/pierrec/lz4 v2.5.2+incompatible // indirect
 	github.com/prometheus/client_golang v1.12.1 // indirect
 	github.com/prometheus/client_model v0.2.0 // indirect
@@ -91,7 +113,7 @@ require (
 	go.uber.org/atomic v1.9.0 // indirect
 	go.uber.org/multierr v1.6.0 // indirect
 	go.uber.org/zap v1.19.1 // indirect
-	golang.org/x/crypto v0.0.0-20220315160706-3147a52a75dd // indirect
+	golang.org/x/crypto v0.0.0-20220427172511-eb4f295cb31f // indirect
 	golang.org/x/mod v0.6.0-dev.0.20220419223038-86c51ed26bb4 // indirect
 	golang.org/x/net v0.0.0-20220722155237-a158d28d115b // indirect
 	golang.org/x/oauth2 v0.0.0-20211104180415-d3ed0bb246c8 // indirect
@@ -111,7 +133,7 @@ require (
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 	k8s.io/api v0.25.3 // indirect
 	k8s.io/apiextensions-apiserver v0.25.0 // indirect
-	k8s.io/component-base v0.25.0 // indirect
+	k8s.io/component-base v0.25.3 // indirect
 	k8s.io/klog/v2 v2.70.1 // indirect
 	k8s.io/kube-openapi v0.0.0-20220803162953-67bda5d908f1 // indirect
 	k8s.io/utils v0.0.0-20220728103510-ee6ede2d64ed // indirect

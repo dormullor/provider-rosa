@@ -1,13 +1,15 @@
 apiVersion: v1
 kind: Secret
 metadata:
-  namespace: crossplane-system
+  namespace: default
   name: example-provider-secret
 type: Opaque
 data:
-  # credentials: BASE64ENCODED_PROVIDER_CREDS
+  credentials: cm9zYSB0b2tlbg==
+  htpasswdUser: a3ViZWFkbWlu
+  htpasswdPass: YlJ3IUhIOTRyMzF5Zkg2OHp3S2ZUSg==
 ---
-apiVersion: template.crossplane.io/v1alpha1
+apiVersion: rosa.crossplane.io/v1alpha1
 kind: ProviderConfig
 metadata:
   name: example
@@ -15,6 +17,18 @@ spec:
   credentials:
     source: Secret
     secretRef:
-      namespace: crossplane-system
+      namespace: default
       name: example-provider-secret
       key: credentials
+  htpasswdUser:
+    source: Secret
+    secretRef:
+      namespace: default
+      name: example-provider-secret
+      key: htpasswdUser
+  htpasswdPass:
+    source: Secret
+    secretRef:
+      namespace: default
+      name: example-provider-secret
+      key: htpasswdPass

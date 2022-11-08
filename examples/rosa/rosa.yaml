@@ -1,0 +1,74 @@
+apiVersion: openshift.rosa.crossplane.io/v1alpha1
+kind: Cluster
+metadata:
+  name: dors-rosa
+spec:
+  forProvider:
+    awsAccountID: "123456789"
+    region: eu-central-1
+    multiAZ: false
+    version: 4.11.9
+    channelGroup: stable
+    flavour: osd-4
+    expiration: '0001-01-01T00:00:00Z'
+    disableWorkloadMonitoring: false
+    fips: false
+    etcdEncryption: false
+    kmsKeyArn: ""
+    computeMachineType: m5.xlarge
+    computeNodes: 2
+    autoscaling: false
+    minReplicas: 2
+    maxReplicas: 2
+    # subnetIds:
+    #   - subnet-1
+    #   - subnet-2
+    #   - subnet-3
+    # availabilityZones:
+    #   - us-east-1a
+      # - us-east-1b
+      # - us-east-1c
+    # networkType: OVNKubernetes
+    machineCIDR:
+      ip: 10.0.0.0
+      mask: "16"
+    serviceCIDR:
+      ip: 172.30.0.0
+      mask: "16"
+    podCIDR:
+      ip: 10.128.0.0
+      mask: "14"
+    hostPrefix: 23
+    private: false
+    privateLink: false
+    customProperties: {}
+    tags: {}
+    dryRun: false
+    disableSCPChecks: false
+    isSTS: true
+    roleARN: arn:aws:iam::123456789:role/Corssplane-Rosa-Installer-Role
+    externalID: ""
+    supportRoleARN: arn:aws:iam::123456789:role/Corssplane-Rosa-Support-Role
+    operatorIAMRoles:
+      - openshift-ingress-operator
+      - openshift-cluster-csi-drivers
+      - openshift-cloud-network-config-controller
+      - openshift-machine-api
+      - openshift-cloud-credential-operator
+      - openshift-image-registry
+    controlPlaneRoleARN: arn:aws:iam::123456789:role/Corssplane-Rosa-ControlPlane-Role
+    workerRoleARN: arn:aws:iam::123456789:role/Corssplane-Rosa-Worker-Role
+    mode: auto
+    nodeDrainGracePeriodInMinutes: 0
+    enableProxy: false
+    # httpProxy: ""
+    # httpsProxy: ""
+    # noProxy: ""
+    # additionalTrustBundleFile: ""
+    # additionalTrustBundle: ""
+    hypershift: false
+  writeConnectionSecretToRef:
+    namespace: default
+    name: example-openshift
+  providerConfigRef:
+    name: example

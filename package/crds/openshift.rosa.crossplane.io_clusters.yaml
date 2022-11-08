@@ -5,18 +5,18 @@ metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.10.0
   creationTimestamp: null
-  name: mytypes.sample.template.crossplane.io
+  name: clusters.openshift.rosa.crossplane.io
 spec:
-  group: sample.template.crossplane.io
+  group: openshift.rosa.crossplane.io
   names:
     categories:
     - crossplane
     - managed
-    - template
-    kind: MyType
-    listKind: MyTypeList
-    plural: mytypes
-    singular: mytype
+    - rosa
+    kind: Cluster
+    listKind: ClusterList
+    plural: clusters
+    singular: cluster
   scope: Cluster
   versions:
   - additionalPrinterColumns:
@@ -35,7 +35,7 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: A MyType is an example API type.
+        description: A Cluster is an example API type.
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -50,7 +50,7 @@ spec:
           metadata:
             type: object
           spec:
-            description: A MyTypeSpec defines the desired state of a MyType.
+            description: A ClusterSpec defines the desired state of a Cluster.
             properties:
               deletionPolicy:
                 default: Delete
@@ -62,12 +62,142 @@ spec:
                 - Delete
                 type: string
               forProvider:
-                description: MyTypeParameters are the configurable fields of a MyType.
+                description: ClusterParameters is the configuration for a cluster
+                  spec.
                 properties:
-                  configurableField:
+                  additionalTrustBundle:
                     type: string
-                required:
-                - configurableField
+                  additionalTrustBundleFile:
+                    type: string
+                  autoscaling:
+                    type: boolean
+                  availabilityZones:
+                    description: AvailabilityZones
+                    items:
+                      type: string
+                    type: array
+                  awsAccountID:
+                    description: Basic configs
+                    type: string
+                  channelGroup:
+                    type: string
+                  computeMachineType:
+                    description: Scaling config
+                    type: string
+                  computeNodes:
+                    type: integer
+                  controlPlaneRoleARN:
+                    type: string
+                  customProperties:
+                    additionalProperties:
+                      type: string
+                    description: Properties
+                    type: object
+                  disableSCPChecks:
+                    description: Disable SCP checks in the installer by setting credentials
+                      mode as mint
+                    type: boolean
+                  disableWorkloadMonitoring:
+                    type: boolean
+                  dryRun:
+                    description: Simulate creating a cluster but don't actually create
+                      it
+                    type: boolean
+                  enableProxy:
+                    type: boolean
+                  etcdEncryption:
+                    type: boolean
+                  expiration:
+                    format: date-time
+                    type: string
+                  externalID:
+                    type: string
+                  fips:
+                    description: Encryption
+                    type: boolean
+                  flavour:
+                    type: string
+                  hostPrefix:
+                    type: integer
+                  httpProxy:
+                    type: string
+                  httpsProxy:
+                    type: string
+                  hypershift:
+                    description: 'HyperShift options:'
+                    type: boolean
+                  isSTS:
+                    description: STS
+                    type: boolean
+                  kmsKeyArn:
+                    type: string
+                  machineCIDR:
+                    description: An IPNet represents an IP network.
+                    properties:
+                      ip:
+                        type: string
+                      mask:
+                        type: string
+                    type: object
+                  maxReplicas:
+                    type: integer
+                  minReplicas:
+                    type: integer
+                  mode:
+                    type: string
+                  multiAZ:
+                    type: boolean
+                  networkType:
+                    description: Network config
+                    type: string
+                  noProxy:
+                    type: string
+                  nodeDrainGracePeriodInMinutes:
+                    type: integer
+                  operatorIAMRoles:
+                    items:
+                      type: string
+                    type: array
+                  podCIDR:
+                    description: An IPNet represents an IP network.
+                    properties:
+                      ip:
+                        type: string
+                      mask:
+                        type: string
+                    type: object
+                  private:
+                    type: boolean
+                  privateLink:
+                    type: boolean
+                  region:
+                    type: string
+                  roleARN:
+                    type: string
+                  serviceCIDR:
+                    description: An IPNet represents an IP network.
+                    properties:
+                      ip:
+                        type: string
+                      mask:
+                        type: string
+                    type: object
+                  subnetIds:
+                    description: SubnetIDs
+                    items:
+                      type: string
+                    type: array
+                  supportRoleARN:
+                    type: string
+                  tags:
+                    additionalProperties:
+                      type: string
+                    description: User-defined tags for AWS resources
+                    type: object
+                  version:
+                    type: string
+                  workerRoleARN:
+                    type: string
                 type: object
               providerConfigRef:
                 default:
@@ -241,13 +371,19 @@ spec:
             - forProvider
             type: object
           status:
-            description: A MyTypeStatus represents the observed state of a MyType.
+            description: A ClusterStatus represents the observed state of a Cluster.
             properties:
               atProvider:
-                description: MyTypeObservation are the observable fields of a MyType.
+                description: ClusterObservation are the observable fields of a Cluster.
                 properties:
-                  observableField:
+                  clusterID:
                     type: string
+                  detailesPage:
+                    type: string
+                  dns:
+                    type: string
+                  userCreated:
+                    type: boolean
                 type: object
               conditions:
                 description: Conditions of the resource.
