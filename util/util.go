@@ -2,7 +2,7 @@ package util
 
 import (
 	"bytes"
-	"crypto/sha1"
+	"crypto/sha256"
 	"encoding/hex"
 	"fmt"
 	"net"
@@ -193,7 +193,7 @@ func CreateProvider(r *rosa.Runtime, awsClient aws.Client, cluster *cmv1.Cluster
 	}
 	r.Reporter.Debugf("Using thumbprint '%s'", thumbprint)
 
-	_, err = awsClient.CreateOpenIDConnectProvider(oidcEndpointURL, thumbprint, cluster.ID())
+	_, err = awsClient.CreateOpenIDConnectProvider(oidcEndpointURL, thumbprint[:40], cluster.ID())
 	if err != nil {
 		return err
 	}
@@ -218,20 +218,20 @@ func getThumbprint(oidcEndpointURL string) (string, error) {
 	for _, cert := range certChain {
 		if cert.IsCA {
 			if bytes.Equal(cert.RawIssuer, cert.RawSubject) {
-				return sha1Hash(cert.Raw), nil
+				return sha256Hash(cert.Raw), nil
 			}
 		}
 	}
 
 	// Fall back to using the last certficiate in the chain
 	cert := certChain[len(certChain)-1]
-	return sha1Hash(cert.Raw), nil
+	return sha256Hash(cert.Raw), nil
 }
 
 // sha1Hash computes the SHA1 of the byte array and returns the hex encoding as a string.
-func sha1Hash(data []byte) string {
+func sha256Hash(data []byte) string {
 	// nolint:gosec
-	hasher := sha1.New()
+	hasher := sha256.New()
 	hasher.Write(data)
 	hashed := hasher.Sum(nil)
 	return hex.EncodeToString(hashed)
@@ -292,6 +292,16 @@ func CreateAdminUser(username, password string, r *rosa.Runtime, awsClient aws.C
 			Name(idp.HTPasswdIDPName).
 			Htpasswd(htpasswdIDP).
 			Build()
+		if err != nil {
+			return err
+		}
+
+		user, err := cmv1.NewUser().ID(username).Build()
+		if err != nil {
+			return err
+		}
+
+		_, err = r.OCMClient.CreateUser(cluster.ID(), "cluster-admins", user)
 		if err != nil {
 			return err
 		}
