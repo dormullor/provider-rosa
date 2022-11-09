@@ -193,7 +193,7 @@ func CreateProvider(r *rosa.Runtime, awsClient aws.Client, cluster *cmv1.Cluster
 	}
 	r.Reporter.Debugf("Using thumbprint '%s'", thumbprint)
 
-	_, err = awsClient.CreateOpenIDConnectProvider(oidcEndpointURL, thumbprint, cluster.ID())
+	_, err = awsClient.CreateOpenIDConnectProvider(oidcEndpointURL, thumbprint[:40], cluster.ID())
 	if err != nil {
 		return err
 	}
