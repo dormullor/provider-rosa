@@ -113,6 +113,7 @@ linters:
   disable:
     - bodyclose
     - noctx
+    - sha1
   enable:
     - megacheck
     - govet
