@@ -1,7 +1,7 @@
 apiVersion: openshift.rosa.crossplane.io/v1alpha1
 kind: Cluster
 metadata:
-  name: dors-rosa
+  name: example
 spec:
   forProvider:
     awsAccountID: "123456789"
