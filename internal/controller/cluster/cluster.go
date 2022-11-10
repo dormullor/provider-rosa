@@ -199,6 +199,7 @@ func (c *external) Observe(ctx context.Context, mg resource.Managed) (managed.Ex
 				xpv1.ResourceCredentialsSecretUserKey:     []byte(c.htpasswdIDP.htpasswdUser),
 				xpv1.ResourceCredentialsSecretPasswordKey: []byte(c.htpasswdIDP.htpasswdPassword),
 				xpv1.ResourceCredentialsSecretEndpointKey: []byte(cluster.API().URL()),
+				"console":                                 []byte(cluster.Console().URL()),
 			}
 			cr.Status.AtProvider.UserCreated = true
 			cr.Status.SetConditions(xpv1.Available())
